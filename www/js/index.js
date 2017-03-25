@@ -23,7 +23,7 @@ var app = {
     initialize: function(dist) {
 		app.getGeoLoc();
 		radius=dist;
-		navigator.vibrate(3000);
+		//navigator.vibrate(3000);
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -128,6 +128,8 @@ var app = {
 		for (var i=0;i<data.length; i++){
 			
 			var colorClass = data[i].sentiment > 0 ? "green" : "red";
+			var imageUrl = data[i].sentiment > 0 ? "http://www.magic-emoji.com/emoji/images/175_emoji_iphone_heavy_black_heart.png" :"http://pix.iemoji.com/images/emoji/apple/ios-9/256/broken-heart.png"
+			
 			
 			markUp += '<div class="event-holder">';
 			
@@ -144,13 +146,14 @@ var app = {
 			
 			markUp += '<div class="event-distance overflow">';
 			markUp += '<span class="first-span">Distance</span>';
-			markUp += '<span class="second-span">'+ data[i].distance +'mi \t';
+			markUp += '<span class="second-span">'+ data[i].distance +' mi \t';
 			markUp += '</span></div>';
 			
 			markUp += '<div class="event-sentiment overflow">';
 			markUp += '<span class="first-span">Popularity Score</span>';
-			markUp += '<span class="second-span ' + colorClass +'">'+ data[i].sentiment +'</span>';
-			markUp += '</div>';
+			markUp += '<span class="second-span ' + colorClass +'">'+ data[i].sentiment +'\t';
+			markUp += '<img src="'+ imageUrl +'" style="width:9%;margin-bottom: 3px;"/>';
+			markUp += '</span></div>';
 			
 			markUp += '<div class="event-count overflow">';
 			markUp += '<span class="first-span">Tweets</span>';
