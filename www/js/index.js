@@ -16,10 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var radius=5;
 var app = {
     // Application Constructor
-    initialize: function() {
+	
+    initialize: function(dist) {
 		app.getGeoLoc();
+		radius=dist;
 		navigator.vibrate(3000);
         this.bindEvents();
     },
@@ -116,13 +119,16 @@ var app = {
 	}
 }
 	
-	function processData(data){
+	function processData(data, lat, lon){
 		data = JSON.parse(data).events;
 		var markUp = '';
 		
 		//EventName":"Drag Race Happening","distance":"2.9285510017403205","sentiment":"77.99999999999989","count":"306"
 		
 		for (var i=0;i<data.length; i++){
+			
+			var colorClass = data[i].sentiment > 0 ? "green" : "red";
+			
 			markUp += '<div class="event-holder">';
 			
 			markUp += '<div class="event-image">';
@@ -135,17 +141,23 @@ var app = {
 			
 			markUp += '<div class="event-distance overflow">';
 			markUp += '<span class="first-span">Distance</span>';
-			markUp += '<span class="second-span">'+ data[i].distance +'</span>';
-			markUp += '</div>';
+			markUp += '<span class="second-span">'+ data[i].distance +'mi \t';
+			markUp += '<a href="http://maps.google.com/maps?saddr=' + lat + ',' + lon + '&daddr=' + data[i].latitude + ',' + data[i].longitude +' "><u>Get Directions</u></a>'
+			markUp += '</span></div>';
 			
 			markUp += '<div class="event-sentiment overflow">';
-			markUp += '<span class="first-span">Sentiment</span>';
-			markUp += '<span class="second-span">'+ data[i].sentiment +'</span>';
+			markUp += '<span class="first-span">Popularity Score</span>';
+			markUp += '<span class="second-span ' + colorClass +'">'+ data[i].sentiment +'</span>';
 			markUp += '</div>';
 			
 			markUp += '<div class="event-count overflow">';
-			markUp += '<span class="first-span">Count</span>';
+			markUp += '<span class="first-span">Tweets</span>';
 			markUp += '<span class="second-span">'+ data[i].count +'</span>';
+			markUp += '</div>';
+			
+			markUp += '<div class="event-count overflow">';
+			markUp += '<span class="first-span">Event-Type</span>';
+			markUp += '<span class="second-span">'+ data[i].category +'</span>';
 			markUp += '</div>';
 			
 			markUp += '</div>';
@@ -161,10 +173,11 @@ var app = {
 		xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 			   // Typical action to be performed when the document is ready:
-			   processData(xhttp.responseText);
+			   processData(xhttp.responseText, lat, lon);
 			}
 		};
-		xhttp.open("GET", "http://10.240.187.212:3000/events?radius=2000&lon="+lon+"&lat="+lat, true);
+		
+		xhttp.open("GET", "http://10.240.187.212:3000/events?radius="+radius+"&lon="+lon+"&lat="+lat, true);
 		xhttp.send();
 
 };

@@ -52,40 +52,42 @@
 		.overflow {
 			overflow: hidden;
 		}
+		
+		.green {
+			color: green;
+		}
+		
+		.red {
+			color: red;
+		}
 	</style>
 
   </head>
   <body>
-
+	<div style="background-color:lightblue">
+	<h1 class="event-Header" style="text-align: center;font-family: cursive;font-weight: bold">Trend-X</h1>
+	</div>
     <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
 				<li class="active">
-					<a href="#">Home</a>
-				</li>
-				<li>
-					<a href="#">Profile</a>
-				</li>
-				<li class="disabled">
-					<a href="#">Messages</a>
+					<a href="#">Events</a>
 				</li>
 				<li class="dropdown pull-right">
-					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
+					 <a href="#" data-toggle="dropdown" class="dropdown-toggle">With-in<strong class="caret"></strong></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="#">Action</a>
+							<a onclick="app.initialize(2)" href="#">2 mi</a>
 						</li>
 						<li>
-							<a href="#">Another action</a>
+							<a onclick="app.initialize(3)" href="#">3 mi</a>
 						</li>
 						<li>
-							<a href="#">Something else here</a>
-						</li>
-						<li class="divider">
+							<a onclick="app.initialize(5)" href="#">5 mi</a>
 						</li>
 						<li>
-							<a href="#">Separated link</a>
+							<a onclick="app.initialize(10)" href="#">10 mi</a>
 						</li>
 					</ul>
 				</li>
@@ -102,7 +104,7 @@
 	<script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
-        app.initialize();
+        app.initialize(5);
     </script>
   </body>
 </html>
