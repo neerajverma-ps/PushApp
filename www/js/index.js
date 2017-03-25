@@ -94,23 +94,77 @@ var app = {
 		// current GPS coordinates
 		//
 		var onSuccess = function(position) {
-			alert('Latitude: '          + position.coords.latitude          + '\n' +
+			callAPI(position.coords.latitude, position.coords.longitude)
+			/*alert('Latitude: '          + position.coords.latitude          + '\n' +
 				  'Longitude: '         + position.coords.longitude         + '\n' +
 				  'Altitude: '          + position.coords.altitude          + '\n' +
 				  'Accuracy: '          + position.coords.accuracy          + '\n' +
 				  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
 				  'Heading: '           + position.coords.heading           + '\n' +
 				  'Speed: '             + position.coords.speed             + '\n' +
-				  'Timestamp: '         + position.timestamp                + '\n');
+				  'Timestamp: '         + position.timestamp                + '\n');*/
 		};
 
 		// onError Callback receives a PositionError object
 		//
 		function onError(error) {
-			alert('codesss: '    + error.code    + '\n' +
-				  'message: ' + error.message + '\n');
+			//alert('codesss: '    + error.code    + '\n' +
+				  //'message: ' + error.message + '\n');
 		}
 		
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
 	}
+}
+	
+	function processData(data){
+		data = JSON.parse(data).events;
+		var markUp = '';
+		
+		//EventName":"Drag Race Happening","distance":"2.9285510017403205","sentiment":"77.99999999999989","count":"306"
+		
+		for (var i=0;i<data.length; i++){
+			markUp += '<div class="event-holder">';
+			
+			markUp += '<div class="event-image">';
+			markUp += '<img src="'+ data[i].image +'"/>';
+			markUp += '</div>';
+			
+			markUp += '<div class="event-name">';
+			markUp += '<span>'+ data[i].EventName +'</span>';
+			markUp += '</div>';
+			
+			markUp += '<div class="event-distance overflow">';
+			markUp += '<span class="first-span">Distance</span>';
+			markUp += '<span class="second-span">'+ data[i].distance +'</span>';
+			markUp += '</div>';
+			
+			markUp += '<div class="event-sentiment overflow">';
+			markUp += '<span class="first-span">Sentiment</span>';
+			markUp += '<span class="second-span">'+ data[i].sentiment +'</span>';
+			markUp += '</div>';
+			
+			markUp += '<div class="event-count overflow">';
+			markUp += '<span class="first-span">Count</span>';
+			markUp += '<span class="second-span">'+ data[i].count +'</span>';
+			markUp += '</div>';
+			
+			markUp += '</div>';
+			
+		}
+		
+		document.querySelector('.event-main').innerHTML = markUp;
+	}
+	
+	function callAPI(lat, lon) {
+		
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+			   // Typical action to be performed when the document is ready:
+			   processData(xhttp.responseText);
+			}
+		};
+		xhttp.open("GET", "http://10.240.187.212:3000/events?radius=2000&lon="+lon+"&lat="+lat, true);
+		xhttp.send();
+
 };
