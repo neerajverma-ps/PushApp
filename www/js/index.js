@@ -139,10 +139,12 @@ var app = {
 			markUp += '<span>'+ data[i].EventName +'</span>';
 			markUp += '</div>';
 			
+			markUp += '<div class="rel">';
+			markUp += '<a class="link" target="_blank" href="http://maps.google.com/maps?saddr=' + lat + ',' + lon + '&daddr=' + data[i].latitude + ',' + data[i].longitude +' "><div class="img123"><img src="img/nav.png" alt="Walk" width="50" height="50" border="0"/></div></a>';
+			
 			markUp += '<div class="event-distance overflow">';
 			markUp += '<span class="first-span">Distance</span>';
 			markUp += '<span class="second-span">'+ data[i].distance +'mi \t';
-			markUp += '<a href="http://maps.google.com/maps?saddr=' + lat + ',' + lon + '&daddr=' + data[i].latitude + ',' + data[i].longitude +' "><u>Get Directions</u></a>'
 			markUp += '</span></div>';
 			
 			markUp += '<div class="event-sentiment overflow">';
@@ -158,6 +160,7 @@ var app = {
 			markUp += '<div class="event-count overflow">';
 			markUp += '<span class="first-span">Event-Type</span>';
 			markUp += '<span class="second-span">'+ data[i].category +'</span>';
+			markUp += '</div>';
 			markUp += '</div>';
 			
 			markUp += '</div>';
