@@ -19,6 +19,7 @@
 var app = {
     // Application Constructor
     initialize: function() {
+		app.getGeoLoc();
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -36,7 +37,7 @@ var app = {
         console.log('Received Device Ready Event');
         console.log('calling setup push');
         app.setupPush();
-		app.getGeoLoc();
+		//app.getGeoLoc();
     },
     setupPush: function() {
         console.log('calling push init');
@@ -105,7 +106,7 @@ var app = {
 		// onError Callback receives a PositionError object
 		//
 		function onError(error) {
-			alert('code: '    + error.code    + '\n' +
+			alert('codesss: '    + error.code    + '\n' +
 				  'message: ' + error.message + '\n');
 		}
 		
