@@ -20,6 +20,7 @@ var app = {
     // Application Constructor
     initialize: function() {
 		app.getGeoLoc();
+		navigator.vibrate(3000);
         this.bindEvents();
     },
     // Bind Event Listeners
